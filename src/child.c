@@ -7,12 +7,11 @@
 const int MAX_LENGTH = 100;
 
 int main(int argc, char* argv[]) {
-    char filename[MAX_LENGTH];
+    char* filename[MAX_LENGTH];
     strcpy(filename, argv[1]);
 
     // Перенаправили вывод в файл
-    FILE* file = fopen(filename, "w");
-    int file_descriptor = fileno(file);
+    int file_descriptor = fileno(filename);
     dup2(file_descriptor, 1);
     printf("```Начало работы```\n");
     char vowels[] = {'a', 'e', 'i', 'o', 'u', 'y'};
@@ -21,7 +20,7 @@ int main(int argc, char* argv[]) {
     while (fgets(string, MAX_LENGTH, stdin)) {
         if (string[0] == eof) {
             close(file_descriptor);
-            fclose(file);
+            fclose(filename);
             return 0;
         }
 
